@@ -1,0 +1,41 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.solvd.bus.dao.IBusStopsDao">
+
+    <resultMap id="stopResultMap" type="com.solvd.bus.domain.BusStop" autoMapping="false">
+        <result column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="latitude" property="latitude"/>
+        <result column="longitude" property="longitude"/>
+        <result column="terminal" property="terminal"/>
+    </resultMap>
+
+    <resultMap id="busResultMap" type="com.solvd.bus.domain.Bus" autoMapping="false">
+        <result column="id" property="id"/>
+        <result column="name" property="name"/>
+    </resultMap>
+
+    <resultMap id="roadResultMap" type="com.solvd.bus.domain.Road" autoMapping="false">
+        <result column="id" property="id"/>
+        <result column="name" property="name"/>
+    </resultMap>
+
+    <select id="select" parameterType="int" resultMap="stopResultMap">
+        SELECT id, name, latitude, longitude, terminal FROM Buses WHERE id = #{id}
+    </select>
+
+    <select id="selectAll" resultMap="stopResultMap">
+        SELECT * FROM Stops
+    </select>
+
+    <select id="selectBusCombinations" parameterType="int" resultMap="busResultMap">
+        SELECT b.id, b.name FROM Buses b JOIN Bus_Combinations bc WHERE bc.stop_id = #{id} and bc.bus_id = b.id
+    </select>
+
+    <select id="selectRoadConnections" parameterType="int" resultMap="roadResultMap">
+        SELECT r.id, r.name FROM Roads r JOIN Stops_Connections sc WHERE sc.stop_id = #{id} and sc.road_id = r.id;
+    </select>
+
+</mapper>

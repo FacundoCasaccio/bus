@@ -8,13 +8,13 @@ public class Route {
 
     private BusStop endPoint;
 
-    private List<Path> steps;
+    private List<Road> steps;
 
     private double distance;
 
     public Route() {}
 
-    public Route(BusStop startPoint, BusStop endPoint, List<Path> steps, double distance) {
+    public Route(BusStop startPoint, BusStop endPoint, List<Road> steps, double distance) {
         this.startPoint = startPoint;
         this.endPoint = endPoint;
         this.steps = steps;
@@ -37,11 +37,11 @@ public class Route {
         this.endPoint = endPoint;
     }
 
-    public List<Path> getSteps() {
+    public List<Road> getSteps() {
         return steps;
     }
 
-    public void setSteps(List<Path> steps) {
+    public void setSteps(List<Road> steps) {
         this.steps = steps;
     }
 

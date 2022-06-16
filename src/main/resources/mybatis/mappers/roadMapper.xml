@@ -1,0 +1,32 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.solvd.bus.dao.IRoadDao">
+
+    <resultMap id="roadResultMap" type="com.solvd.bus.domain.Road" autoMapping="false">
+        <result column="id" property="id"/>
+        <result column="name" property="name"/>
+    </resultMap>
+
+    <resultMap id="stopResultMap" type="com.solvd.bus.domain.BusStop" autoMapping="false">
+        <result column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="latitude" property="latitude"/>
+        <result column="longitude" property="longitude"/>
+        <result column="terminal" property="terminal"/>
+    </resultMap>
+
+    <select id="select" parameterType="int" resultMap="roeadResultMap">
+        SELECT id, name FROM Roads WHERE id = #{id}
+    </select>
+
+    <select id="selectAll" resultMap="roadResultMap">
+        SELECT * FROM Roads
+    </select>
+
+    <select id="selectEndpoints" parameterType="int" resultMap="stopResultMap">
+        SELECT s.id, s.latitude, s.longitude, s.name, s.terminal FROM Stops s JOIN Stops_Connections sc WHERE sc.road_id = #{id} and s.id = sc.stop_id
+    </select>
+
+</mapper>
