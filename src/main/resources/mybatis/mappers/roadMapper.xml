@@ -17,7 +17,7 @@
         <result column="terminal" property="terminal"/>
     </resultMap>
 
-    <select id="select" parameterType="int" resultMap="roeadResultMap">
+    <select id="select" parameterType="int" resultMap="roadResultMap">
         SELECT id, name FROM Roads WHERE id = #{id}
     </select>
 

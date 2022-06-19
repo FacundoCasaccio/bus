@@ -8,14 +8,11 @@ public class Bus {
 
     private String name;
 
-    private List<BusStop> stops;
-
     public Bus() {}
 
     public Bus(int id, String name, List<BusStop> stops) {
         this.id = id;
         this.name = name;
-        this.stops = stops;
     }
 
     public String getName() {
@@ -24,14 +21,6 @@ public class Bus {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public List<BusStop> getStops() {
-        return stops;
-    }
-
-    public void setStops(List<BusStop> stops) {
-        this.stops = stops;
     }
 
     public int getId() {
@@ -46,7 +35,6 @@ public class Bus {
     public String toString() {
         return "Bus{" +
                 "name='" + name + '\'' +
-                ", stops=" + stops +
                 '}';
     }
 }

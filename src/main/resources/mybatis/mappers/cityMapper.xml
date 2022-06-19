@@ -7,8 +7,6 @@
     <resultMap id="cityResultMap" type="com.solvd.bus.domain.City" autoMapping="false">
         <result column="id" property="id"/>
         <result column="name" property="name"/>
-        <result column="terminal" property="terminal"/>
-        <result column="id" property="id"/>
     </resultMap>
 
     <resultMap id="stopResultMap" type="com.solvd.bus.domain.BusStop" autoMapping="false">
@@ -19,20 +17,20 @@
         <result column="terminal" property="terminal"/>
     </resultMap>
 
-    <select id="select" parameterType="int" resultMap="stopResultMap">
-        SELECT id, name, latitude, longitude, terminal FROM Buses WHERE id = #{id}
+    <select id="select" parameterType="int" resultMap="cityResultMap">
+        SELECT id, name FROM Cities WHERE id = #{id}
     </select>
 
-    <select id="selectAll" resultMap="stopResultMap">
-        SELECT * FROM Stops
+    <select id="selectAll" resultMap="cityResultMap">
+        SELECT id, name FROM Cities
     </select>
 
     <select id="selectBusStops" parameterType="int" resultMap="stopResultMap">
-        SELECT id, name, latitude, longitude, terminal FROM Buses WHERE city_id = #{id} and terminal = false
+        SELECT id, name, latitude, longitude, terminal FROM Stops WHERE city_id = #{id} and terminal = false
     </select>
 
     <select id="selectTerminal" parameterType="int" resultMap="stopResultMap">
-        SELECT id, name, latitude, longitude, terminal FROM Buses WHERE city_id = #{id} and terminal = true
+        SELECT id, name, latitude, longitude, terminal FROM Stops WHERE city_id = #{id} and terminal = true
     </select>
 
 </mapper>

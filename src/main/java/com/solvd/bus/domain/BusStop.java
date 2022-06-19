@@ -12,6 +12,8 @@ public class BusStop {
 
     private double longitude;
 
+    private boolean terminal;
+
     private List<Bus> busCombinations;
 
     private List<Road> roads;
@@ -57,6 +59,22 @@ public class BusStop {
         this.longitude = longitude;
     }
 
+    public boolean isTerminal() {
+        return terminal;
+    }
+
+    public void setTerminal(boolean terminal) {
+        this.terminal = terminal;
+    }
+
+    public List<Road> getRoads() {
+        return roads;
+    }
+
+    public void setRoads(List<Road> roads) {
+        this.roads = roads;
+    }
+
     public List<Bus> getBusCombinations() {
         return busCombinations;
     }
@@ -72,6 +90,9 @@ public class BusStop {
                 ", name='" + name + '\'' +
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
+                ", terminal=" + terminal +
+                ", busCombinations=" + busCombinations +
+                ", roads=" + roads +
                 '}';
     }
 }
