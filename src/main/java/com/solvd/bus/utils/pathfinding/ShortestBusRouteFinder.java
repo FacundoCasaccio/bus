@@ -69,7 +69,7 @@ public class ShortestBusRouteFinder {
         return nextBusStop;
     }
 
-    private BusStop getLastPath(){
+    private BusStop getLastPath() {
         BusStop lastBusStop = null;
         while (path.entrySet().iterator().hasNext()) {
             lastBusStop = path.entrySet().iterator().next().getKey();
@@ -78,7 +78,6 @@ public class ShortestBusRouteFinder {
     }
 
     public void getShortestPath(BusStop partialDestination) {
-        LOGGER.info("llegue");
         for (BusStop node : nodes) {
             BusStop lastBusStop = getLastPath();
             if (lastBusStop == partialDestination) {
