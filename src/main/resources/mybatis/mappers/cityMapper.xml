@@ -1,0 +1,36 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.solvd.bus.dao.ICityDao">
+
+    <resultMap id="cityResultMap" type="com.solvd.bus.domain.City" autoMapping="false">
+        <result column="id" property="id"/>
+        <result column="name" property="name"/>
+    </resultMap>
+
+    <resultMap id="stopResultMap" type="com.solvd.bus.domain.BusStop" autoMapping="false">
+        <result column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="latitude" property="latitude"/>
+        <result column="longitude" property="longitude"/>
+        <result column="terminal" property="terminal"/>
+    </resultMap>
+
+    <select id="select" parameterType="int" resultMap="cityResultMap">
+        SELECT id, name FROM Cities WHERE id = #{id}
+    </select>
+
+    <select id="selectAll" resultMap="cityResultMap">
+        SELECT id, name FROM Cities
+    </select>
+
+    <select id="selectBusStops" parameterType="int" resultMap="stopResultMap">
+        SELECT id, name, latitude, longitude, terminal FROM Stops WHERE city_id = #{id} and terminal = false
+    </select>
+
+    <select id="selectTerminal" parameterType="int" resultMap="stopResultMap">
+        SELECT id, name, latitude, longitude, terminal FROM Stops WHERE city_id = #{id} and terminal = true
+    </select>
+
+</mapper>

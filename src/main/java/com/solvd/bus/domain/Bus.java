@@ -1,16 +1,18 @@
 package com.solvd.bus.domain;
 
+import java.util.List;
+
 public class Bus {
+
+    private int id;
 
     private String name;
 
-    private Route route;
-
     public Bus() {}
 
-    public Bus(String name, Route route) {
+    public Bus(int id, String name, List<BusStop> stops) {
+        this.id = id;
         this.name = name;
-        this.route = route;
     }
 
     public String getName() {
@@ -21,19 +23,18 @@ public class Bus {
         this.name = name;
     }
 
-    public Route getRoute() {
-        return route;
+    public int getId() {
+        return id;
     }
 
-    public void setRoute(Route route) {
-        this.route = route;
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override
     public String toString() {
         return "Bus{" +
                 "name='" + name + '\'' +
-                ", route=" + route +
                 '}';
     }
 }

@@ -1,6 +1,10 @@
 package com.solvd.bus.domain;
 
+import java.util.List;
+
 public class BusStop {
+
+    private int id;
 
     private String name;
 
@@ -8,12 +12,27 @@ public class BusStop {
 
     private double longitude;
 
+    private boolean terminal;
+
+    private List<Bus> busCombinations;
+
+    private List<Road> roads;
+
     public BusStop() {}
 
-    public BusStop(String name, double latitude, double longitude) {
+    public BusStop(int id, String name, double latitude, double longitude) {
+        this.id = id;
         this.name = name;
         this.latitude = latitude;
         this.longitude = longitude;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -40,12 +59,40 @@ public class BusStop {
         this.longitude = longitude;
     }
 
+    public boolean isTerminal() {
+        return terminal;
+    }
+
+    public void setTerminal(boolean terminal) {
+        this.terminal = terminal;
+    }
+
+    public List<Road> getRoads() {
+        return roads;
+    }
+
+    public void setRoads(List<Road> roads) {
+        this.roads = roads;
+    }
+
+    public List<Bus> getBusCombinations() {
+        return busCombinations;
+    }
+
+    public void setBusCombinations(List<Bus> busCombinations) {
+        this.busCombinations = busCombinations;
+    }
+
     @Override
     public String toString() {
         return "BusStop{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
+                ", terminal=" + terminal +
+                ", busCombinations=" + busCombinations +
+                ", roads=" + roads +
                 '}';
     }
 }
