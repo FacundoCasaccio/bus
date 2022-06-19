@@ -37,5 +37,4 @@
     <select id="selectRoadConnections" parameterType="int" resultMap="roadResultMap">
         SELECT r.id, r.name FROM Roads r JOIN Connections sc WHERE sc.stop_id = #{id} and sc.road_id = r.id;
     </select>
-
 </mapper>

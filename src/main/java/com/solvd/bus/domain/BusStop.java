@@ -3,7 +3,6 @@ package com.solvd.bus.domain;
 import java.util.List;
 
 public class BusStop {
-
     private int id;
 
     private String name;
@@ -18,14 +17,15 @@ public class BusStop {
 
     private List<Road> roads;
 
-    public BusStop() {}
+    public BusStop() {
+    }
 
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId(int busStop) {
+        this.id = busStop;
     }
 
     public String getName() {
@@ -78,7 +78,7 @@ public class BusStop {
 
     @Override
     public String toString() {
-        return "BusStop: " + name + ", id: " + id + "\n" +
+        return "BusStop: " + name + ", busStopID: " + id + "\n" +
                 "Latitude: " + latitude + ", Longitude: " + longitude + "\n" +
                 "Routes: " + routes + "\n" +
                 "Roads: " + roads + "\n";

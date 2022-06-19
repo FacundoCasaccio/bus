@@ -1,34 +1,31 @@
 package com.solvd.bus.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
+
 public class Trip {
-
-    private Route route;
-
-    private List<Bus> buses;
+    private List<PathNode> pathNodes = new ArrayList<>();
 
     public Trip() {
     }
 
-    public Trip(Route route, List<Bus> buses) {
-        this.route = route;
-        this.buses = buses;
+    public Trip(List<PathNode> pathNodes) {
+        this.pathNodes = pathNodes;
     }
 
-    public Route getRoute() {
-        return route;
+    public List<PathNode> getPathNodes() {
+        return pathNodes;
     }
 
-    public void setRoute(Route route) {
-        this.route = route;
+    public void setPathNodes(List<PathNode> pathNodes) {
+        this.pathNodes = pathNodes;
     }
 
-    public List<Bus> getBuses() {
-        return buses;
-    }
-
-    public void setBuses(List<Bus> buses) {
-        this.buses = buses;
+    @Override
+    public String toString() {
+        return "Trip{" +
+                "pathNodes=" + pathNodes +
+                '}';
     }
 }

@@ -1,14 +1,11 @@
 package com.solvd.bus.domain;
 
-import java.util.List;
-
 public class Bus {
-
     private int id;
-
     private String name;
 
-    public Bus() {}
+    public Bus() {
+    }
 
     public String getName() {
         return name;

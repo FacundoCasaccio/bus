@@ -3,14 +3,14 @@ package com.solvd.bus.domain;
 import java.util.List;
 
 public class Road {
-
     private int id;
 
     private String name;
 
     private List<BusStop> endPoints;
 
-    public Road() {}
+    public Road() {
+    }
 
     public int getId() {
         return id;
