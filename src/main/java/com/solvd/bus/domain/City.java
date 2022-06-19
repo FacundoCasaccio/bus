@@ -14,13 +14,6 @@ public class City {
 
     public City() {}
 
-    public City(String name, BusStop terminal, List<BusStop> busStops) {
-        this.id = id;
-        this.name = name;
-        this.terminal = terminal;
-        this.busStops = busStops;
-    }
-
     public int getId() {
         return id;
     }
@@ -55,11 +48,9 @@ public class City {
 
     @Override
     public String toString() {
-        return "City{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", terminal=" + terminal +
-                ", busStops=" + busStops +
-                '}';
+        return "City: " + name + ", id: " + id + "\n" +
+                "Name: " + name + "\n" +
+                "Terminal: " + terminal + "\n" +
+                "Stops: " + busStops + "\n";
     }
 }

@@ -10,11 +10,6 @@ public class Bus {
 
     public Bus() {}
 
-    public Bus(int id, String name, List<BusStop> stops) {
-        this.id = id;
-        this.name = name;
-    }
-
     public String getName() {
         return name;
     }
@@ -33,8 +28,6 @@ public class Bus {
 
     @Override
     public String toString() {
-        return "Bus{" +
-                "name='" + name + '\'' +
-                '}';
+        return "Bus: " + name + ", id: " + id + "\n";
     }
 }

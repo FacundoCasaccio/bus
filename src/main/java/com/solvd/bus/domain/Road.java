@@ -12,12 +12,6 @@ public class Road {
 
     public Road() {}
 
-    public Road(int id, String name, List<BusStop> endPoints) {
-        this.id = id;
-        this.name = name;
-        this.endPoints = endPoints;
-    }
-
     public int getId() {
         return id;
     }
@@ -44,10 +38,6 @@ public class Road {
 
     @Override
     public String toString() {
-        return "Road{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", endPoints=" + endPoints +
-                '}';
+        return "Road: " + name + ", id: " + id + "\n";
     }
 }

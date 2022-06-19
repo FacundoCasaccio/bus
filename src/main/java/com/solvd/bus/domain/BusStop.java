@@ -14,18 +14,11 @@ public class BusStop {
 
     private boolean terminal;
 
-    private List<Bus> busCombinations;
+    private List<Bus> routes;
 
     private List<Road> roads;
 
     public BusStop() {}
-
-    public BusStop(int id, String name, double latitude, double longitude) {
-        this.id = id;
-        this.name = name;
-        this.latitude = latitude;
-        this.longitude = longitude;
-    }
 
     public int getId() {
         return id;
@@ -75,24 +68,19 @@ public class BusStop {
         this.roads = roads;
     }
 
-    public List<Bus> getBusCombinations() {
-        return busCombinations;
+    public List<Bus> getRoutes() {
+        return routes;
     }
 
-    public void setBusCombinations(List<Bus> busCombinations) {
-        this.busCombinations = busCombinations;
+    public void setRoutes(List<Bus> routes) {
+        this.routes = routes;
     }
 
     @Override
     public String toString() {
-        return "BusStop{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", latitude=" + latitude +
-                ", longitude=" + longitude +
-                ", terminal=" + terminal +
-                ", busCombinations=" + busCombinations +
-                ", roads=" + roads +
-                '}';
+        return "BusStop: " + name + ", id: " + id + "\n" +
+                "Latitude: " + latitude + ", Longitude: " + longitude + "\n" +
+                "Routes: " + routes + "\n" +
+                "Roads: " + roads + "\n";
     }
 }

@@ -26,7 +26,7 @@
     </select>
 
     <select id="selectEndpoints" parameterType="int" resultMap="stopResultMap">
-        SELECT s.id, s.latitude, s.longitude, s.name, s.terminal FROM Stops s JOIN Stops_Connections sc WHERE sc.road_id = #{id} and s.id = sc.stop_id
+        SELECT s.id, s.latitude, s.longitude, s.name, s.terminal FROM Stops s JOIN Connections c WHERE c.road_id = #{id} and s.id = c.stop_id
     </select>
 
 </mapper>
