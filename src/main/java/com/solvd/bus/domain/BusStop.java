@@ -8,13 +8,18 @@ public class BusStop {
 
     private double longitude;
 
+    private String name;
+
+    private long cityID;
+
     public BusStop() {
     }
 
-    public BusStop(int id, double latitude, double longitude) {
+    public BusStop(int id, double latitude, double longitude, String name, long city_id) {
         this.id = id;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.cityID = city_id;
     }
 
     public int getId() {
@@ -41,12 +46,30 @@ public class BusStop {
         this.longitude = longitude;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public long getCityID() {
+        return cityID;
+    }
+
+    public void setCityID(long cityID) {
+        this.cityID = cityID;
+    }
+
     @Override
     public String toString() {
         return "BusStop{" +
-                "name='" + id + '\'' +
+                "id=" + id +
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
+                ", name='" + name + '\'' +
+                ", cityID=" + cityID +
                 '}';
     }
 }

@@ -2,38 +2,23 @@ package com.solvd.bus.domain;
 
 public class Bus {
 
+    private long id;
+
     private String name;
 
-    private Route route;
+    public Bus() {
+    }
 
-    public Bus() {}
-
-    public Bus(String name, Route route) {
+    public Bus(long id, String name) {
+        this.id = id;
         this.name = name;
-        this.route = route;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Route getRoute() {
-        return route;
-    }
-
-    public void setRoute(Route route) {
-        this.route = route;
     }
 
     @Override
     public String toString() {
         return "Bus{" +
-                "name='" + name + '\'' +
-                ", route=" + route +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 '}';
     }
 }

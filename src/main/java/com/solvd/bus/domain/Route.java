@@ -1,65 +1,49 @@
 package com.solvd.bus.domain;
 
-import java.util.List;
-
 public class Route {
 
-    private BusStop startPoint;
+    private long id;
 
-    private BusStop endPoint;
+    private long busStopID;
+    private long busID;
 
-    private List<Path> steps;
 
-    private double distance;
-
-    public Route() {}
-
-    public Route(BusStop startPoint, BusStop endPoint, List<Path> steps, double distance) {
-        this.startPoint = startPoint;
-        this.endPoint = endPoint;
-        this.steps = steps;
-        this.distance = distance;
+    public Route(long id, long busStopID, long busID) {
+        this.id = id;
+        this.busStopID = busStopID;
+        this.busID = busID;
     }
 
-    public BusStop getStartPoint() {
-        return startPoint;
+    public long getId() {
+        return id;
     }
 
-    public void setStartPoint(BusStop startPoint) {
-        this.startPoint = startPoint;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public BusStop getEndPoint() {
-        return endPoint;
+    public long getBusStopID() {
+        return busStopID;
     }
 
-    public void setEndPoint(BusStop endPoint) {
-        this.endPoint = endPoint;
+    public void setBusStopID(long busStopID) {
+        this.busStopID = busStopID;
     }
 
-    public List<Path> getSteps() {
-        return steps;
+    public long getBusID() {
+        return busID;
     }
 
-    public void setSteps(List<Path> steps) {
-        this.steps = steps;
-    }
-
-    public double getDistance() {
-        return distance;
-    }
-
-    public void setDistance(double distance) {
-        this.distance = distance;
+    public void setBusID(long busID) {
+        this.busID = busID;
     }
 
     @Override
     public String toString() {
         return "Route{" +
-                "startPoint=" + startPoint +
-                ", endPoint=" + endPoint +
-                ", steps=" + steps +
-                ", distance=" + distance +
+                "id=" + id +
+                ", busStopID=" + busStopID +
+                ", busID=" + busID +
                 '}';
     }
 }
