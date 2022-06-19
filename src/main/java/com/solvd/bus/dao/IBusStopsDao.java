@@ -14,7 +14,7 @@ public interface IBusStopsDao extends IDao<BusStop> {
     @Override
     List<BusStop> selectAll();
 
-    List<Bus> selectBusCombinations(int id);
+    List<Bus> selectRoutes(int id);
 
     List<Road> selectRoadConnections(int id);
 }
