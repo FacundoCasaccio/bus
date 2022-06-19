@@ -2,7 +2,7 @@ package com.solvd.bus.domain;
 
 public class Bus {
 
-    private long id;
+    private long busID;
 
     private String name;
 
@@ -10,14 +10,31 @@ public class Bus {
     }
 
     public Bus(long id, String name) {
-        this.id = id;
+        this.busID = id;
+        this.name = name;
+    }
+
+    public long getBusID() {
+        return busID;
+    }
+
+    public void setBusID(long busID) {
+        this.busID = busID;
+    }
+
+    public String getName() {
+        return name;
+
+    }
+
+    public void setName(String name) {
         this.name = name;
     }
 
     @Override
     public String toString() {
         return "Bus{" +
-                "id=" + id +
+                "id=" + busID +
                 ", name='" + name + '\'' +
                 '}';
     }

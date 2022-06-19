@@ -2,7 +2,7 @@ package com.solvd.bus.domain;
 
 public class BusStop {
 
-    private int id;
+    private int busStopID;
 
     private double latitude;
 
@@ -16,18 +16,18 @@ public class BusStop {
     }
 
     public BusStop(int id, double latitude, double longitude, String name, long city_id) {
-        this.id = id;
+        this.busStopID = id;
         this.latitude = latitude;
         this.longitude = longitude;
         this.cityID = city_id;
     }
 
-    public int getId() {
-        return id;
+    public int getBusStopID() {
+        return busStopID;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setBusStopID(int busStopID) {
+        this.busStopID = busStopID;
     }
 
     public double getLatitude() {
@@ -65,7 +65,7 @@ public class BusStop {
     @Override
     public String toString() {
         return "BusStop{" +
-                "id=" + id +
+                "id=" + busStopID +
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
                 ", name='" + name + '\'' +
