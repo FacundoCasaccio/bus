@@ -30,7 +30,7 @@ public class Runner {
         IBusDao busMapper = (IBusDao) myBatisFactory.getMapper("bus");
 
         Bus bus = busMapper.select(1);
-        //LOGGER.info(bus);
+        LOGGER.info(bus);
 
         ICityDao cityMapper = (ICityDao) myBatisFactory.getMapper("city");
 
