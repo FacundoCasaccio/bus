@@ -3,7 +3,6 @@ package com.solvd.bus.domain;
 import java.util.List;
 
 public class City {
-
     private int id;
 
     private String name;
@@ -12,7 +11,8 @@ public class City {
 
     private List<BusStop> busStops;
 
-    public City() {}
+    public City() {
+    }
 
     public int getId() {
         return id;
