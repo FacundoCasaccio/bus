@@ -17,6 +17,7 @@ public class BusService {
 
     public Bus getBusById(int id) {
         Bus bus = busMapper.select(id);
+        bus.setBusStops(busMapper.selectAllBusStopsByBusID(id));
         return bus;
     }
 
@@ -24,4 +25,5 @@ public class BusService {
         List<Bus> buses = busMapper.selectAll();
         return buses;
     }
+
 }
