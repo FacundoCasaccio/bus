@@ -17,27 +17,22 @@ public class Runner {
     private static final Logger LOGGER = LogManager.getLogger(Runner.class);
     private static SessionFactory factory = SessionFactory.getInstance();
 
+
     public static void main(String[] args) {
         BusStopService busStopService = new BusStopService();
         CityService cityService = new CityService();
         ShortestBusRouteFinder shortestBusRouteFinder = new ShortestBusRouteFinder();
-        BusStop stop1;
-        BusStop stop2;
+        BusStop origin;
+        BusStop destination;
         try (SqlSession session = factory.getFactory().openSession()) {
-            shortestBusRouteFinder.getNodes().addAll(busStopService.getAllStops());
             shortestBusRouteFinder.setTerminal1Coordinates(cityService.getCityById(1).getTerminal());
             shortestBusRouteFinder.setTerminal2Coordinates(cityService.getCityById(2).getTerminal());
-            stop1 = cityService.getCityById(1).getBusStops().stream().findFirst().get();
-            stop2 = cityService.getCityById(2).getBusStops().stream().findFirst().get();
-            LOGGER.info(stop1);
+            origin = busStopService.getStopById(6);
+            destination = busStopService.getStopById(11);
         }
-
-        shortestBusRouteFinder.buildShortestPathBtwTwoBusStops(stop1, stop2);
-
-        Trip trip = new Trip();
-
-        XMLWRITER xmlwriter = new XMLWRITER(trip);
-        JSONWrite jsonWrite = new JSONWrite(trip);
         
+
+        shortestBusRouteFinder.buildShortestPathBtwTwoBusStops(origin, destination);
+
     }
 }
