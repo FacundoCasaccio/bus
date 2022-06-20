@@ -1,9 +1,12 @@
 package com.solvd.bus;
 
 import com.solvd.bus.domain.BusStop;
+import com.solvd.bus.domain.Trip;
 import com.solvd.bus.service.BusStopService;
 import com.solvd.bus.service.CityService;
+import com.solvd.bus.utils.JSONWrite;
 import com.solvd.bus.utils.SessionFactory;
+import com.solvd.bus.utils.XMLWRITER;
 import com.solvd.bus.utils.pathfinding.ShortestBusRouteFinder;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.logging.log4j.LogManager;
@@ -27,6 +30,9 @@ public class Runner {
             origin = busStopService.getStopById(6);
             destination = busStopService.getStopById(11);
         }
+        
+
         shortestBusRouteFinder.buildShortestPathBtwTwoBusStops(origin, destination);
+
     }
 }
