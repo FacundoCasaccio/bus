@@ -10,9 +10,10 @@ import java.util.*;
 public class ShortestBusRouteFinder {
     public static final Logger LOGGER = LogManager.getLogger(ShortestBusRouteFinder.class);
     private Set<BusStop> nodes = new HashSet<>();
-    private LinkedHashMap<BusStop, Bus> path = new LinkedHashMap<>();
     private BusStop terminal1Coordinates;
     private BusStop terminal2Coordinates;
+
+    private final Map<BusStop, Bus> path = new LinkedHashMap<>();
 
     public Set<BusStop> getNodes() {
         return nodes;
@@ -20,10 +21,6 @@ public class ShortestBusRouteFinder {
 
     public void setNodes(Set<BusStop> nodes) {
         this.nodes = nodes;
-    }
-
-    public LinkedHashMap<BusStop, Bus> getPath() {
-        return path;
     }
 
     public BusStop getTerminal1Coordinates() {
@@ -42,57 +39,66 @@ public class ShortestBusRouteFinder {
         this.terminal2Coordinates = terminal2Coordinates;
     }
 
+    public Map<BusStop, Bus> getPath() {
+        return path;
+    }
+
     public Double distanceBetweenTwoNodes(BusStop node1, BusStop node2) {
-        return Math.pow(Math.pow(node1.getLatitude(), 2) + Math.pow(node2.getLongitude(), 2), 0.5);
+        return Math.pow(Math.pow(node1.getLatitude() - node2.getLatitude(), 2) + Math.pow(node1.getLongitude() - node2.getLongitude(), 2), 0.5);
     }
 
-    public Bus getBusThatConnectTwoStops(BusStop stop1, BusStop stop2) {
-        Bus busThatConnectBusStops = null;
-        for (Bus busFromStop2 : stop2.getRoutes()) {
-            busThatConnectBusStops = stop1.getRoutes().stream().filter(busFromStop1 -> busFromStop1.getId() == busFromStop2.getId()).findFirst().get();
-        }
-        return busThatConnectBusStops;
-    }
-
-    public BusStop getNextClosestBusStop(BusStop busStop1, BusStop busStop2) {
-//        Set<Route> route1 = routes.stream().filter(route -> route.getBusStopID() == busStop1.getBusStopID()).collect(Collectors.toSet()); //gives info abot all de buses that have a stop in this busStopS
-        BusStop nextBusStop = null;
-        Map<BusStop, Double> distances = new HashMap<BusStop, Double>();
-        for (BusStop node : nodes) {
-            if (node.getId() > busStop1.getId()) {
-                Double distance = distanceBetweenTwoNodes(busStop1, node) + distanceBetweenTwoNodes(node, busStop2);
-                distances.put(node, distance);
-            }
-        }
-        Double minDistance = distances.values().iterator().next();
-        nextBusStop = distances.keySet().stream().filter(busStop -> minDistance.equals(distances.get(busStop))).findFirst().get();
-        return nextBusStop;
-    }
-
-    private BusStop getLastPath() {
+    public BusStop getLastBusStop() {
         BusStop lastBusStop = null;
-        while (path.entrySet().iterator().hasNext()) {
-            lastBusStop = path.entrySet().iterator().next().getKey();
+        int count = 0;
+
+        for (int i = 0; i < path.size(); i++) {
+            lastBusStop = path.keySet().iterator().next();
         }
         return lastBusStop;
     }
 
-    public void getShortestPath(BusStop partialDestination) {
-        for (BusStop node : nodes) {
-            BusStop lastBusStop = getLastPath();
-            if (lastBusStop == partialDestination) {
-                break;
+    public void getShortestPathBtwTwoBusStops(BusStop originStop, BusStop destinationStop) {
+        path.put(originStop, null);
+        int x = 0;
+        while (x == 0) {
+            findClosestNextNode(getLastBusStop(), destinationStop);
+            if (getLastBusStop().equals(destinationStop)) {
+                x = 1;
             }
-            path.put(getNextClosestBusStop(lastBusStop, partialDestination), getBusThatConnectTwoStops(getNextClosestBusStop(lastBusStop, partialDestination), partialDestination));
         }
     }
 
-    public void buildShortestPathBtwTwoBusStops(BusStop originStop, BusStop destinationStop) {
-        path.put(originStop, null);
-        getShortestPath(terminal1Coordinates);
-        getShortestPath(terminal2Coordinates);
-        getShortestPath(destinationStop);
-        LOGGER.info("The shortest path is:");
-        path.entrySet().stream().forEach(path -> LOGGER.info("Take bus " + path.getValue().getId() + "in the busStop " + path.getKey().getId()));
+    public void findClosestNextNode(BusStop node1, BusStop node2) {
+        Bus busConnectingNodes;
+        BusStop closestBusStop;
+        Double minDistance = null;
+        Double minDist = null;
+        Map<Double, BusStop> closestNodes = new HashMap<>();
+        Map<BusStop, Bus> busAndStop = new HashMap<>();
+        for (Bus bus : node1.getRoutes()) {
+            Map<Double, BusStop> distances = new HashMap<>();
+            bus.getBusStops().forEach(busStop -> distances.put(distanceBetweenTwoNodes(node1, busStop) + distanceBetweenTwoNodes(busStop, node2), busStop));
+            Iterator it = distances.keySet().stream().sorted().iterator();
+            while (it.hasNext()) {
+                minDistance = (Double) it.next();
+            }
+            BusStop partialClosestStop = distances.get(minDistance);
+            closestNodes.put(minDistance, partialClosestStop);
+            busAndStop.put(partialClosestStop, bus);
+        }
+        Iterator minDistIterator = closestNodes.keySet().stream().sorted().iterator();
+        while (minDistIterator.hasNext()) {
+            minDist = (Double) minDistIterator.next();
+        }
+        closestBusStop = closestNodes.get(minDist);
+        busConnectingNodes = busAndStop.get(closestNodes.get(minDist));
+        path.put(closestBusStop, busConnectingNodes);
+    }
+
+    public void buildShortestPathBtwTwoBusStops(BusStop stop1, BusStop stop2) {
+        getShortestPathBtwTwoBusStops(stop1, terminal1Coordinates);
+        getShortestPathBtwTwoBusStops(terminal1Coordinates, terminal2Coordinates);
+        getShortestPathBtwTwoBusStops(terminal2Coordinates, stop2);
+        LOGGER.info(path);
     }
 }

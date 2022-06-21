@@ -19,29 +19,34 @@ public class Runner {
     private static final Logger LOGGER = LogManager.getLogger(Runner.class);
     private static SessionFactory factory = SessionFactory.getInstance();
 
+<<<<<<< HEAD
     public static void main(String[] args) throws IOException {
+=======
+
+    public static void main(String[] args) {
+>>>>>>> d5d45550f13258b21a68293eecf53e42315b7477
         BusStopService busStopService = new BusStopService();
         CityService cityService = new CityService();
         ShortestBusRouteFinder shortestBusRouteFinder = new ShortestBusRouteFinder();
-        BusStop stop1;
-        BusStop stop2;
+        BusStop origin;
+        BusStop destination;
         try (SqlSession session = factory.getFactory().openSession()) {
-            shortestBusRouteFinder.getNodes().addAll(busStopService.getAllStops());
             shortestBusRouteFinder.setTerminal1Coordinates(cityService.getCityById(1).getTerminal());
             shortestBusRouteFinder.setTerminal2Coordinates(cityService.getCityById(2).getTerminal());
-            stop1 = cityService.getCityById(1).getBusStops().stream().findFirst().get();
-            stop2 = cityService.getCityById(2).getBusStops().stream().findFirst().get();
-            LOGGER.info(stop1);
+            origin = busStopService.getStopById(6);
+            destination = busStopService.getStopById(11);
         }
+        
 
-        shortestBusRouteFinder.buildShortestPathBtwTwoBusStops(stop1, stop2);
+        shortestBusRouteFinder.buildShortestPathBtwTwoBusStops(origin, destination);
 
-        Trip trip = new Trip();
-
+<<<<<<< HEAD
         writerJSON jsonWrite = new writerJSON(trip);
         writerXML xmlWriter = new writerXML(trip);
         xmlWriter.writeXML();
         jsonWrite.writeJSON();
         
+=======
+>>>>>>> d5d45550f13258b21a68293eecf53e42315b7477
     }
 }

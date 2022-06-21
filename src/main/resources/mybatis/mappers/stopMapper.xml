@@ -31,7 +31,7 @@
     </select>
 
     <select id="selectRoutes" parameterType="int" resultMap="busResultMap">
-        SELECT b.id, b.name FROM Buses b JOIN Routes r WHERE r.stop_id = #{id} and r.bus_id = b.id
+        SELECT b.id, b.name FROM Buses b JOIN Routes r WHERE r.bus_id = b.id AND r.stop_id = #{id}
     </select>
 
     <select id="selectRoadConnections" parameterType="int" resultMap="roadResultMap">
