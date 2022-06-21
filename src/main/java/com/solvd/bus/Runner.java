@@ -4,20 +4,22 @@ import com.solvd.bus.domain.BusStop;
 import com.solvd.bus.domain.Trip;
 import com.solvd.bus.service.BusStopService;
 import com.solvd.bus.service.CityService;
-import com.solvd.bus.utils.JSONWrite;
+import com.solvd.bus.utils.writerJSON;
 import com.solvd.bus.utils.SessionFactory;
-import com.solvd.bus.utils.XMLWRITER;
+import com.solvd.bus.utils.writerXML;
 import com.solvd.bus.utils.pathfinding.ShortestBusRouteFinder;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.io.IOException;
 
 public class Runner {
 
     private static final Logger LOGGER = LogManager.getLogger(Runner.class);
     private static SessionFactory factory = SessionFactory.getInstance();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         BusStopService busStopService = new BusStopService();
         CityService cityService = new CityService();
         ShortestBusRouteFinder shortestBusRouteFinder = new ShortestBusRouteFinder();
@@ -36,8 +38,10 @@ public class Runner {
 
         Trip trip = new Trip();
 
-        XMLWRITER xmlwriter = new XMLWRITER(trip);
-        JSONWrite jsonWrite = new JSONWrite(trip);
+        writerJSON jsonWrite = new writerJSON(trip);
+        writerXML xmlWriter = new writerXML(trip);
+        xmlWriter.writeXML();
+        jsonWrite.writeJSON();
         
     }
 }

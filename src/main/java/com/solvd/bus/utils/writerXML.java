@@ -17,18 +17,18 @@ import java.io.File;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class XMLWRITER {
+public class writerXML {
 
     public static final String xmlFilePath = "src/main/resources/DOM/trip.xml";
     Trip trip;
 
-    private static final Logger LOGGER = LogManager.getLogger(XMLWRITER.class);
+    private static final Logger LOGGER = LogManager.getLogger(writerXML.class);
 
-    public XMLWRITER(Trip trip) {
+    public writerXML(Trip trip) {
         this.trip = trip;
     }
 
-    public void mainXml(){
+    public void writeXML(){
 
         try {
             DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
