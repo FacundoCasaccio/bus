@@ -2,7 +2,7 @@ package com.solvd.bus.domain;
 
 import java.util.List;
 
-public class Route {
+public class Combination {
 
     private BusStop startPoint;
 
@@ -12,9 +12,10 @@ public class Route {
 
     private double distance;
 
-    public Route() {}
+    public Combination() {
+    }
 
-    public Route(BusStop startPoint, BusStop endPoint, List<Road> steps, double distance) {
+    public Combination(BusStop startPoint, BusStop endPoint, List<Road> steps, double distance) {
         this.startPoint = startPoint;
         this.endPoint = endPoint;
         this.steps = steps;

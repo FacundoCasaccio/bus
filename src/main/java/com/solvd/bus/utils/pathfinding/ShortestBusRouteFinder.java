@@ -2,25 +2,25 @@ package com.solvd.bus.utils.pathfinding;
 
 import com.solvd.bus.domain.Bus;
 import com.solvd.bus.domain.BusStop;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import com.solvd.bus.service.BusService;
+import com.solvd.bus.service.BusStopService;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class ShortestBusRouteFinder {
-    public static final Logger LOGGER = LogManager.getLogger(ShortestBusRouteFinder.class);
-    private Set<BusStop> nodes = new HashSet<>();
     private BusStop terminal1Coordinates;
     private BusStop terminal2Coordinates;
-
+    private BusStopService busStopService;
+    private BusService busService;
     private final Map<BusStop, Bus> path = new LinkedHashMap<>();
 
-    public Set<BusStop> getNodes() {
-        return nodes;
+    public void setBusStopService(BusStopService busStopService) {
+        this.busStopService = busStopService;
     }
 
-    public void setNodes(Set<BusStop> nodes) {
-        this.nodes = nodes;
+    public void setBusService(BusService busService) {
+        this.busService = busService;
     }
 
     public BusStop getTerminal1Coordinates() {
@@ -43,62 +43,76 @@ public class ShortestBusRouteFinder {
         return path;
     }
 
-    public Double distanceBetweenTwoNodes(BusStop node1, BusStop node2) {
+    private double distanceBetweenTwoNodes(BusStop node1, BusStop node2) {
         return Math.pow(Math.pow(node1.getLatitude() - node2.getLatitude(), 2) + Math.pow(node1.getLongitude() - node2.getLongitude(), 2), 0.5);
     }
 
-    public BusStop getLastBusStop() {
-        BusStop lastBusStop = null;
-        int count = 0;
-
-        for (int i = 0; i < path.size(); i++) {
-            lastBusStop = path.keySet().iterator().next();
-        }
-        return lastBusStop;
+    private BusStop getLastBusStop() {
+        List<Map.Entry<BusStop, Bus>> entryList = new ArrayList<>(path.entrySet());
+        Map.Entry<BusStop, Bus> lastEntry = entryList.get(entryList.size() - 1);
+        return lastEntry.getKey();
     }
 
-    public void getShortestPathBtwTwoBusStops(BusStop originStop, BusStop destinationStop) {
-        path.put(originStop, null);
-        int x = 0;
-        while (x == 0) {
-            findClosestNextNode(getLastBusStop(), destinationStop);
-            if (getLastBusStop().equals(destinationStop)) {
-                x = 1;
+    private void getShortestPathBtwTwoBusStops(BusStop destinationStop) {
+        List<BusStop> busStopsVisited = new ArrayList<>();
+        BusStop visitBusStop;
+        while (true) {
+            visitBusStop = getLastBusStop();
+            if (busStopsVisited.contains(visitBusStop)) {
+                break;
+            } else {
+                busStopsVisited.add(visitBusStop);
+                findClosestNextNode(visitBusStop, destinationStop);
             }
         }
+        path.put(destinationStop, getBusThatConnectTwoStops(getLastBusStop(), destinationStop));
     }
 
-    public void findClosestNextNode(BusStop node1, BusStop node2) {
-        Bus busConnectingNodes;
-        BusStop closestBusStop;
-        Double minDistance = null;
-        Double minDist = null;
+    private void findClosestNextNode(BusStop node1, BusStop node2) {
+        node1 = busStopService.getStopById(node1.getId());
+        node2 = busStopService.getStopById(node2.getId());
+        Double partialMinDistance;
+        Double totalMinDist;
         Map<Double, BusStop> closestNodes = new HashMap<>();
         Map<BusStop, Bus> busAndStop = new HashMap<>();
         for (Bus bus : node1.getRoutes()) {
+            bus = busService.getBusById(bus.getId());
             Map<Double, BusStop> distances = new HashMap<>();
-            bus.getBusStops().forEach(busStop -> distances.put(distanceBetweenTwoNodes(node1, busStop) + distanceBetweenTwoNodes(busStop, node2), busStop));
-            Iterator it = distances.keySet().stream().sorted().iterator();
-            while (it.hasNext()) {
-                minDistance = (Double) it.next();
+            for (BusStop busStop : bus.getBusStops()) {
+                busStop = busStopService.getStopById(busStop.getId());
+                double distance = distanceBetweenTwoNodes(node2, busStop) + distanceBetweenTwoNodes(busStop, node2);
+                if (distance > 0) {
+                    distances.put(distance, busStop);
+                }
             }
-            BusStop partialClosestStop = distances.get(minDistance);
-            closestNodes.put(minDistance, partialClosestStop);
-            busAndStop.put(partialClosestStop, bus);
+            partialMinDistance = distances.keySet().stream().sorted().collect(Collectors.toList()).get(0);
+            busAndStop.put(distances.get(partialMinDistance), bus);
+            closestNodes.put(partialMinDistance, distances.get(partialMinDistance));
         }
-        Iterator minDistIterator = closestNodes.keySet().stream().sorted().iterator();
-        while (minDistIterator.hasNext()) {
-            minDist = (Double) minDistIterator.next();
-        }
-        closestBusStop = closestNodes.get(minDist);
-        busConnectingNodes = busAndStop.get(closestNodes.get(minDist));
-        path.put(closestBusStop, busConnectingNodes);
+        totalMinDist = closestNodes.keySet().stream().sorted().collect(Collectors.toList()).get(0);
+        path.put(closestNodes.get(totalMinDist), busAndStop.get(closestNodes.get(totalMinDist)));
     }
 
-    public void buildShortestPathBtwTwoBusStops(BusStop stop1, BusStop stop2) {
-        getShortestPathBtwTwoBusStops(stop1, terminal1Coordinates);
-        getShortestPathBtwTwoBusStops(terminal1Coordinates, terminal2Coordinates);
-        getShortestPathBtwTwoBusStops(terminal2Coordinates, stop2);
-        LOGGER.info(path);
+    private Bus getBusThatConnectTwoStops(BusStop stop1, BusStop stop2) {
+        Bus busThatConnectBusStops = null;
+        for (Bus bus : stop1.getRoutes()) {
+            bus = busService.getBusById(bus.getId());
+            for (BusStop busStop : bus.getBusStops()) {
+                busStop = busStopService.getStopById(busStop.getId());
+                if (busStop.getId() == stop2.getId()) {
+                    busThatConnectBusStops = bus;
+                    break;
+                }
+            }
+        }
+        return busThatConnectBusStops;
+    }
+
+    public Map<BusStop, Bus> buildShortestPathBtwTwoBusStops(BusStop stop1, BusStop stop2) {
+        path.put(stop1, null);
+        getShortestPathBtwTwoBusStops(terminal1Coordinates);
+        path.put(terminal2Coordinates, getBusThatConnectTwoStops(terminal1Coordinates, terminal2Coordinates));
+        getShortestPathBtwTwoBusStops(stop2);
+        return path;
     }
 }
