@@ -50,6 +50,7 @@ public class Runner {
             LOGGER.info("\t\t\t\t\t" + barcelonaCity.getBusStops().get(i).getId() + ". " + barcelonaCity.getBusStops().get(i).getName() + " -> " + "\t\t\t\t\t\t\t\t\t" + "|\t\t\t\t\t\t" + valenciaCity.getBusStops().get(i).getId() + ". "
                     + valenciaCity.getBusStops().get(i).getName());
         }
+
         for (int i = 0; i < maxSize - minSize; i++) {
             valenciaBusStopsIDs.add(valenciaCity.getBusStops().get(i).getId());
             LOGGER.info("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t\t" + valenciaCity.getBusStops().get(i).getId() + ". " + valenciaCity.getBusStops().get(i).getName() + " -> "
