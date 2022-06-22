@@ -16,7 +16,7 @@
         <result column="longitude" property="longitude"/>
         <result column="terminal" property="terminal"/>
     </resultMap>
-    
+
     <select id="select" parameterType="int" resultMap="busResultMap">
         SELECT id, name FROM Buses WHERE id = #{id}
     </select>
@@ -26,7 +26,7 @@
     </select>
 
     <select id="selectAllBusStopsByBusID" parameterType="int" resultMap="stopResultMap">
-        SELECT s.id, s.latitude, s. longitude, s.name, s.terminal, s.city_id FROM Stops s JOIN Routes r ON s.id =
+        SELECT s.id, s.latitude, s. longitude, s.name, s.terminal, s.city_id FROM Stops s JOIN Combinations r ON s.id =
         r.stop_id WHERE r.bus_id = #{id}
     </select>
 

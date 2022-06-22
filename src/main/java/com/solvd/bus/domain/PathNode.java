@@ -2,14 +2,14 @@ package com.solvd.bus.domain;
 
 public class PathNode {
     private String busStopName;
-    private BusStop busID;
+    private String busName;
 
     public PathNode() {
     }
 
-    public PathNode(String busStopName, BusStop busID) {
+    public PathNode(String busStopName, String busName) {
         this.busStopName = busStopName;
-        this.busID = busID;
+        this.busName = busName;
     }
 
     public String getBusStopName() {
@@ -20,11 +20,11 @@ public class PathNode {
         this.busStopName = busStopName;
     }
 
-    public BusStop getBusID() {
-        return busID;
+    public String getBusID() {
+        return busName;
     }
 
-    public void setBusID(BusStop busID) {
-        this.busID = busID;
+    public void setBusID(String busID) {
+        this.busName = busID;
     }
 }
