@@ -121,14 +121,18 @@ public class ShortestBusRouteFinder {
 
     public Trip buildShortestPathBtwTwoBusStops(BusStop stop1, BusStop stop2) {
         Trip trip = new Trip();
-        path.put(stop1, null);
+        Bus bus = new Bus();
+        path.put(stop1, bus);
         getShortestPathBtwTwoBusStops(terminal1Coordinates);
         path.put(terminal2Coordinates, getBusThatConnectTwoStops(terminal1Coordinates, terminal2Coordinates));
         getShortestPathBtwTwoBusStops(stop2);
         path.entrySet().forEach(node -> {
-            if (node.getValue() == null) {
+            if (node.getValue() == null && !node.getKey().equals(stop1)) {
                 LOGGER.info("Take bus #connection and direct to stop Valencia Bus Terminal in Valencia City");
                 trip.getPathNodes().add(new PathNode("Valencia Bus Terminal", "connection"));
+            } else if (node.getKey().equals(stop1)) {
+                LOGGER.info("Go to bus stop " + stop1.getName() + " in Barcelona City");
+                trip.getPathNodes().add(new PathNode(stop1.getName(), "origin stop"));
             } else {
                 trip.getPathNodes().add(new PathNode(node.getKey().getName(), node.getValue().getName()));
                 LOGGER.info("Take bus #" + node.getValue().getName() + " and direct to stop " + node.getKey().getName() + " in " + cityService.getCityById(node.getKey().getCityID()).getName() + " City");

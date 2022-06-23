@@ -1,7 +1,7 @@
 {
   "pathNodes" : [ {
-    "busStopName" : "Valencia Bus Terminal",
-    "busID" : "connection"
+    "busStopName" : "E",
+    "busID" : "origin stop"
   }, {
     "busStopName" : "C",
     "busID" : "321"
