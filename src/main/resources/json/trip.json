@@ -1,0 +1,24 @@
+{
+  "pathNodes" : [ {
+    "busStopName" : "E",
+    "busID" : "origin stop"
+  }, {
+    "busStopName" : "C",
+    "busID" : "321"
+  }, {
+    "busStopName" : "B",
+    "busID" : "13"
+  }, {
+    "busStopName" : "Barcelona Nord Terminal",
+    "busID" : "13"
+  }, {
+    "busStopName" : "Valencia Bus Terminal",
+    "busID" : "connection"
+  }, {
+    "busStopName" : "K",
+    "busID" : "190"
+  }, {
+    "busStopName" : "J",
+    "busID" : "190"
+  } ]
+}

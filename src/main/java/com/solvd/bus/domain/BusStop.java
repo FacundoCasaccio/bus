@@ -13,6 +13,8 @@ public class BusStop {
 
     private boolean terminal;
 
+    private int cityID;
+
     private List<Bus> routes;
 
     private List<Road> roads;
@@ -76,11 +78,16 @@ public class BusStop {
         this.routes = routes;
     }
 
+    public int getCityID() {
+        return cityID;
+    }
+
+    public void setCity(int cityID) {
+        this.cityID = cityID;
+    }
+
     @Override
     public String toString() {
-        return "BusStop: " + name + ", busStopID: " + id + "\n" +
-                "Latitude: " + latitude + ", Longitude: " + longitude + "\n" +
-                "Routes: " + routes + "\n" +
-                "Roads: " + roads + "\n";
+        return "Go to bus stop " + name;
     }
 }

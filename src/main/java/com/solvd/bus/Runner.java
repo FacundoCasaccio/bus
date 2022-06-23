@@ -1,13 +1,11 @@
 package com.solvd.bus;
 
 import com.solvd.bus.domain.City;
-import com.solvd.bus.domain.PathNode;
 import com.solvd.bus.domain.Trip;
 import com.solvd.bus.service.BusService;
 import com.solvd.bus.service.BusStopService;
 import com.solvd.bus.service.CityService;
 import com.solvd.bus.utils.parser.WriterJSON;
-import com.solvd.bus.utils.parser.WriterXML;
 import com.solvd.bus.utils.pathfinding.ReadNumericOptionsFromUser;
 import com.solvd.bus.utils.pathfinding.ShortestBusRouteFinder;
 import org.apache.logging.log4j.LogManager;
@@ -26,13 +24,13 @@ public class Runner {
         BusStopService busStopService = new BusStopService();
         CityService cityService = new CityService();
         ShortestBusRouteFinder shortestBusRouteFinder = new ShortestBusRouteFinder();
-        Trip trip = new Trip();
         City barcelonaCity = cityService.getCityById(1);
         City valenciaCity = cityService.getCityById(2);
         shortestBusRouteFinder.setBusService(busService);
         shortestBusRouteFinder.setBusStopService(busStopService);
-        shortestBusRouteFinder.setTerminal1Coordinates(barcelonaCity.getTerminal());
-        shortestBusRouteFinder.setTerminal2Coordinates(valenciaCity.getTerminal());
+        shortestBusRouteFinder.setCityService(cityService);
+        shortestBusRouteFinder.setTerminal1Coordinates(busStopService.getStopById(1));
+        shortestBusRouteFinder.setTerminal2Coordinates(busStopService.getStopById(14));
         LOGGER.info("================================================================================================================================");
         LOGGER.info("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t" + "WELCOME!");
         LOGGER.info("--------------------------------------------------------------------------------------------------------------------------------");
@@ -50,14 +48,6 @@ public class Runner {
             LOGGER.info("\t\t\t\t\t" + barcelonaCity.getBusStops().get(i).getId() + ". " + barcelonaCity.getBusStops().get(i).getName() + " -> " + "\t\t\t\t\t\t\t\t\t" + "|\t\t\t\t\t\t" + valenciaCity.getBusStops().get(i).getId() + ". "
                     + valenciaCity.getBusStops().get(i).getName());
         }
-
-        for (int i = 0; i < maxSize - minSize; i++) {
-            valenciaBusStopsIDs.add(valenciaCity.getBusStops().get(i).getId());
-            LOGGER.info("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t\t" + valenciaCity.getBusStops().get(i).getId() + ". " + valenciaCity.getBusStops().get(i).getName() + " -> "
-                    + valenciaCity.getBusStops().get(i).getRoads().get(0).getName());
-        }
-        LOGGER.info(barcelonaBusStopsIDs);
-        LOGGER.info(valenciaBusStopsIDs);
         LOGGER.info("================================================================================================================================");
         LOGGER.info("Please choose your origin bus stop from the Barcelona City bus Stop's list:");
         int originStopID = read.optionFromUser(barcelonaBusStopsIDs);
@@ -65,20 +55,12 @@ public class Runner {
         int destinationStopID = read.optionFromUser(valenciaBusStopsIDs);
         LOGGER.info("================================================================================================================================");
         LOGGER.info("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t" + "The shortest route created is:");
-        shortestBusRouteFinder.buildShortestPathBtwTwoBusStops(busStopService.getStopById(originStopID), busStopService.getStopById(destinationStopID)).entrySet().forEach(node -> {
-            if (node.getKey().equals(busStopService.getStopById(originStopID))) {
-                LOGGER.info("Take bus #" + node.getValue().getName() + "At bus stop " + busStopService.getStopById(originStopID).getName() + "\n");
-                trip.getPathNodes().add(new PathNode(node.getKey().getName(), busStopService.getStopById(originStopID).getName()));
-            } else {
-                LOGGER.info("Take bus #" + node.getValue().getName() + "At bus stop " + node.getKey().getName() + "\n");
-                trip.getPathNodes().add(new PathNode(node.getKey().getName(), node.getValue().getName()));
-            }
-        });
 
-        WriterJSON writerJSON = new WriterJSON(trip);
+        Trip finalTrip = shortestBusRouteFinder.buildShortestPathBtwTwoBusStops(busStopService.getStopById(originStopID), busStopService.getStopById(destinationStopID));
+
+        WriterJSON writerJSON = new WriterJSON(finalTrip);
         writerJSON.writeJSON();
-        WriterXML writerXML = new WriterXML(trip);
-        writerXML.writeXML();
+
         LOGGER.info("The path created was stores in XML format in the file named 'trip.xml' and in JSON format in the file 'trip.json'");
     }
 }
