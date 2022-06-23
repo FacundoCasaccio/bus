@@ -38,6 +38,6 @@ public class Bus {
 
     @Override
     public String toString() {
-        return "Bus: " + name + ", id: " + id + "\n";
+        return " and take bus #" + name + "\n";
     }
 }

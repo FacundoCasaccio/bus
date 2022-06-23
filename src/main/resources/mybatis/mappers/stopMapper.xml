@@ -10,6 +10,7 @@
         <result column="latitude" property="latitude"/>
         <result column="longitude" property="longitude"/>
         <result column="terminal" property="terminal"/>
+        <result column="city_id" property="cityID"/>
     </resultMap>
 
     <resultMap id="busResultMap" type="com.solvd.bus.domain.Bus" autoMapping="false">
@@ -23,7 +24,7 @@
     </resultMap>
 
     <select id="select" parameterType="int" resultMap="stopResultMap">
-        SELECT id, name, latitude, longitude, terminal FROM Stops WHERE id = #{id}
+        SELECT id, name, latitude, longitude, terminal, city_id FROM Stops WHERE id = #{id}
     </select>
 
     <select id="selectAll" resultMap="stopResultMap">
