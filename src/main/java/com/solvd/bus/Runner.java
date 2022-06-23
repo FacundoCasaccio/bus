@@ -61,7 +61,7 @@ public class Runner {
         LOGGER.info("================================================================================================================================");
         LOGGER.info("Please choose your origin bus stop from the Barcelona City bus Stop's list:");
         int originStopID = read.optionFromUser(barcelonaBusStopsIDs);
-        LOGGER.info("Please choose your origin bus stop from the Barcelona City bus Stop's list:");
+        LOGGER.info("Please choose your origin bus stop from the Valencia City bus Stop's list:");
         int destinationStopID = read.optionFromUser(valenciaBusStopsIDs);
         LOGGER.info("================================================================================================================================");
         LOGGER.info("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t" + "The shortest route created is:");
