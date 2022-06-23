@@ -5,9 +5,11 @@ import com.solvd.bus.domain.Trip;
 import com.solvd.bus.service.BusService;
 import com.solvd.bus.service.BusStopService;
 import com.solvd.bus.service.CityService;
+import com.solvd.bus.utils.JaxbParser;
 import com.solvd.bus.utils.parser.WriterJSON;
 import com.solvd.bus.utils.pathfinding.ReadNumericOptionsFromUser;
 import com.solvd.bus.utils.pathfinding.ShortestBusRouteFinder;
+import jakarta.xml.bind.JAXBException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -51,7 +53,7 @@ public class Runner {
         LOGGER.info("================================================================================================================================");
         LOGGER.info("Please choose your origin bus stop from the Barcelona City bus Stop's list:");
         int originStopID = read.optionFromUser(barcelonaBusStopsIDs);
-        LOGGER.info("Please choose your origin bus stop from the Barcelona City bus Stop's list:");
+        LOGGER.info("Please choose your origin bus stop from the Valencia City bus Stop's list:");
         int destinationStopID = read.optionFromUser(valenciaBusStopsIDs);
         LOGGER.info("================================================================================================================================");
         LOGGER.info("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t" + "The shortest route created is:");
@@ -60,6 +62,12 @@ public class Runner {
 
         WriterJSON writerJSON = new WriterJSON(finalTrip);
         writerJSON.writeJSON();
+
+        try {
+            JaxbParser.marshallTrip(finalTrip);
+        } catch (JAXBException e) {
+            throw new RuntimeException(e);
+        }
 
         LOGGER.info("The path created was stores in XML format in the file named 'trip.xml' and in JSON format in the file 'trip.json'");
     }

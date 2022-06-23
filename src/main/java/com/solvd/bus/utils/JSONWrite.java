@@ -11,7 +11,7 @@ import org.apache.logging.log4j.Logger;
 
 public class JSONWrite {
 
-    private static final Logger LOGGER = LogManager.getLogger(XMLWRITER.class);
+    private static final Logger LOGGER = LogManager.getLogger(JSONWrite.class);
     private Trip trip;
 
     public JSONWrite(Trip trip) {
