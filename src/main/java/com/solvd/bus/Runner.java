@@ -48,12 +48,6 @@ public class Runner {
             LOGGER.info("\t\t\t\t\t" + barcelonaCity.getBusStops().get(i).getId() + ". " + barcelonaCity.getBusStops().get(i).getName() + " -> " + "\t\t\t\t\t\t\t\t\t" + "|\t\t\t\t\t\t" + valenciaCity.getBusStops().get(i).getId() + ". "
                     + valenciaCity.getBusStops().get(i).getName());
         }
-//        for (int i = 0; i < maxSize - minSize; i++) {
-//            valenciaBusStopsIDs.add(valenciaCity.getBusStops().get(i).getId());
-//            LOGGER.info("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t\t" + valenciaCity.getBusStops().get(i).getId() + ". " + valenciaCity.getBusStops().get(i).getName() + " -> "
-//                    + valenciaCity.getBusStops().get(i).getRoads().get(0).getName());
-//        }
-
         LOGGER.info("================================================================================================================================");
         LOGGER.info("Please choose your origin bus stop from the Barcelona City bus Stop's list:");
         int originStopID = read.optionFromUser(barcelonaBusStopsIDs);
