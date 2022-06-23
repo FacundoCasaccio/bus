@@ -2,17 +2,24 @@ package com.solvd.bus.utils.pathfinding;
 
 import com.solvd.bus.domain.Bus;
 import com.solvd.bus.domain.BusStop;
+import com.solvd.bus.domain.PathNode;
+import com.solvd.bus.domain.Trip;
 import com.solvd.bus.service.BusService;
 import com.solvd.bus.service.BusStopService;
+import com.solvd.bus.service.CityService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class ShortestBusRouteFinder {
+    private static final Logger LOGGER = LogManager.getLogger(ShortestBusRouteFinder.class);
     private BusStop terminal1Coordinates;
     private BusStop terminal2Coordinates;
     private BusStopService busStopService;
     private BusService busService;
+    private CityService cityService;
     private final Map<BusStop, Bus> path = new LinkedHashMap<>();
 
     public void setBusStopService(BusStopService busStopService) {
@@ -41,6 +48,10 @@ public class ShortestBusRouteFinder {
 
     public Map<BusStop, Bus> getPath() {
         return path;
+    }
+
+    public void setCityService(CityService cityService) {
+        this.cityService = cityService;
     }
 
     private double distanceBetweenTwoNodes(BusStop node1, BusStop node2) {
@@ -108,11 +119,22 @@ public class ShortestBusRouteFinder {
         return busThatConnectBusStops;
     }
 
-    public Map<BusStop, Bus> buildShortestPathBtwTwoBusStops(BusStop stop1, BusStop stop2) {
+    public Trip buildShortestPathBtwTwoBusStops(BusStop stop1, BusStop stop2) {
+        Trip trip = new Trip();
         path.put(stop1, null);
         getShortestPathBtwTwoBusStops(terminal1Coordinates);
         path.put(terminal2Coordinates, getBusThatConnectTwoStops(terminal1Coordinates, terminal2Coordinates));
         getShortestPathBtwTwoBusStops(stop2);
-        return path;
+        path.entrySet().forEach(node -> {
+            if (node.getValue() == null) {
+                LOGGER.info("Take bus #connection and direct to stop Valencia Bus Terminal in Valencia City");
+                trip.getPathNodes().add(new PathNode("Valencia Bus Terminal", "connection"));
+            } else {
+                trip.getPathNodes().add(new PathNode(node.getKey().getName(), node.getValue().getName()));
+                LOGGER.info("Take bus #" + node.getValue().getName() + " and direct to stop " + node.getKey().getName() + " in " + cityService.getCityById(node.getKey().getCityID()).getName() + " City");
+            }
+        });
+        LOGGER.info("You achieved your final destination!");
+        return trip;
     }
 }
