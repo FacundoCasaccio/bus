@@ -1,6 +1,9 @@
 # bus
 <h3>Third block laba project</h3>
 
+![map 3](https://user-images.githubusercontent.com/87502999/175203555-ba5a3c1b-9caa-469a-8f72-79c4cdd05d6e.png)
 
-![map1](https://user-images.githubusercontent.com/87502999/174589380-abfb2a8f-031e-44da-8dd7-01ae9e2d5f11.png)
-![map2](https://user-images.githubusercontent.com/87502999/174589386-c7f61cb1-f07f-40e8-8144-1f9e7d5e3e14.png)
+![map 1](https://user-images.githubusercontent.com/87502999/175203541-bc8292c0-b938-4069-8c81-befdcefcde9e.png)
+
+![map 2](https://user-images.githubusercontent.com/87502999/175203546-95fc8846-5a28-442f-999d-b04f5d1eaff0.png)
+
